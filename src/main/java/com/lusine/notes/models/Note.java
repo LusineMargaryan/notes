@@ -1,11 +1,22 @@
 package com.lusine.notes.models;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "notes")
 public class Note {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+
     private int userId;
     private String title;
     private String note;
+
+    @Column(name="created_at")
     private long createdAt;
+
+    @Column(name="updated_at")
     private long updatedAt;
 
     public int getId() {
