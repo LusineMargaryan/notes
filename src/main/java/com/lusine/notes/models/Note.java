@@ -45,10 +45,12 @@ public class Note implements Serializable {
         this.id = id;
     }
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     public int getUserId() {
         return userId;
     }
 
+    @JsonIgnore
     public void setUserId(int userId) {
         this.userId = userId;
     }
