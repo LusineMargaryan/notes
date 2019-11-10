@@ -31,4 +31,9 @@ public class NotesController {
     public Note updateNote(@PathVariable int id, @RequestBody Note newNote) {
         return notesService.updateNote(id, newNote);
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteNote(@PathVariable int id) {
+        notesService.deleteNote(id);
+    }
 }

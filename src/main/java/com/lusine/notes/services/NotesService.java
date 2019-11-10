@@ -4,7 +4,9 @@ import com.lusine.notes.exceptions.NoteNotFoundException;
 import com.lusine.notes.models.Note;
 import com.lusine.notes.repositories.NotesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.time.Instant;
 import java.util.Optional;
@@ -28,6 +30,14 @@ public class NotesService {
         return noteMaybe.
                 map(noteToBeUpdated -> updateNoteFieldsAndSave(noteToBeUpdated, newNote))
                 .orElseThrow(NoteNotFoundException::new);
+    }
+
+    public void deleteNote(int id) {
+        try {
+            notesRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException exception) {
+            throw new NoteNotFoundException();
+        }
     }
 
     private Note updateNoteFieldsAndSave(Note noteToBeUpdated, Note newNote) {
