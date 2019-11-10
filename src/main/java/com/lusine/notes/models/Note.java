@@ -2,8 +2,10 @@ package com.lusine.notes.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.Instant;
 
@@ -17,7 +19,11 @@ public class Note implements Serializable {
     @Column(name="user_id")
     private int userId;
 
+    @NotBlank(message = "Title cannot be blank")
+    @Length(max = 50, message = "Title character count cannot exceed 50 characters")
     private String title;
+
+    @Length(max = 50, message = "Note character count cannot exceed 1000 characters")
     private String note;
 
     @Column(name="created_at")
