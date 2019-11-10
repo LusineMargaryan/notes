@@ -15,12 +15,20 @@ public class NotesController {
     private NotesService notesService;
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Optional<Note> getNoteById(@PathVariable int id) {
+    public Note getNoteById(@PathVariable int id) {
         return notesService.getNoteById(id);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public Note createNote(@RequestBody Note note) {
         return notesService.createNote(note);
+    }
+
+    @PutMapping(
+            value = "/{id}",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Note updateNote(@PathVariable int id, @RequestBody Note newNote) {
+        return notesService.updateNote(id, newNote);
     }
 }
