@@ -1,0 +1,26 @@
+version: '3'
+services:
+  notes-db:
+    container_name: notes-db
+    image: mysql:8.0.18
+    environment:
+      MYSQL_DATABASE: notesapp
+      MYSQL_ROOT_PASSWORD: 12345678
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: always
+
+  app:
+    restart: always
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    command: mvn clean spring-boot:run
+    depends_on:
+      - notes-db
